@@ -24,6 +24,13 @@ class PedidoController extends Pedido
         $pedido->idProducto = $idProducto;
        
         
+         
+        $tipoProducto = Producto::traerTipoPorId($idProducto);
+        $pedido->tipoProducto = $tipoProducto;
+       
+        
+
+        
        
         
         
@@ -105,16 +112,10 @@ class PedidoController extends Pedido
 
     public function TraerUno($request, $response, $args)
     {
-       /*
-        $usr = $args['usuario'];
-        $usuario = Usuario::obtenerUsuario($usr);
-        $payload = json_encode($usuario);
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-          */
+       return 0;
     }
+
+   
 
 
 

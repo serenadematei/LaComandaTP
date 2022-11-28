@@ -14,6 +14,7 @@ class Pedido
     public $idProducto;
     public $idMesa;
     public $codigoPedido;
+    public $tipoProducto;
 
     public $tiempoInicio;
     public $tiempoFinalizacion;
@@ -30,8 +31,8 @@ class Pedido
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
 
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos 
-        (estado, nombreCliente, idMozo, idSocio, idEmpleado, idProducto, idMesa, codigoPedido) 
-        VALUES (:estado, :nombreCliente, :idMozo, :idSocio, :idEmpleado, :idProducto, :idMesa, :codigoPedido)");
+        (estado, nombreCliente, idMozo, idSocio, idEmpleado, idProducto, idMesa, codigoPedido, tipoProducto) 
+        VALUES (:estado, :nombreCliente, :idMozo, :idSocio, :idEmpleado, :idProducto, :idMesa, :codigoPedido, :tipoProducto)");
 
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->bindValue(':nombreCliente', $this->nombreCliente, PDO::PARAM_STR);
@@ -41,6 +42,7 @@ class Pedido
         $consulta->bindValue(':idProducto', $this->idProducto, PDO::PARAM_INT);
         $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
         $consulta->bindValue(':codigoPedido', $this->codigoPedido, PDO::PARAM_STR);
+        $consulta->bindValue(':tipoProducto', $this->tipoProducto, PDO::PARAM_STR);
     
         $consulta->execute();
 

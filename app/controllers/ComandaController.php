@@ -34,7 +34,9 @@ class ComandaController extends Comanda
         
     }
 
-    public function ListarPedidosPorEstadoYTipoEmpleado($request, $response, $args)
+    
+     
+    public function ListarPedidosPorEstado($request, $response, $args)
     {
       
  
@@ -42,6 +44,8 @@ class ComandaController extends Comanda
             $idComanda = $parametros['idComanda'];
             $perfilEmpleado = $parametros['perfilEmpleado'];
             $estadoPedido = $parametros['estadoPedido'];
+            
+            $tipoProducto = Producto::traerTipoProductoPorPerfilEmpleado($perfilEmpleado);
            
 
             $comanda=Comanda::traerComandaPorId($idComanda);
@@ -49,7 +53,7 @@ class ComandaController extends Comanda
             $productos = Producto::obtenerProductosDePedidosPorTipoEmpleado($perfilEmpleado, $estadoPedido,$codigoPedido);
             if (count($productos) == 0) {
                   
-                    $payload = json_encode(array("mensaje" => "No hay pedidos ". $estadoPedido . " para empleados de tipo: ". $perfilEmpleado .
+                    $payload = json_encode(array("mensaje" => "No hay pedidos en estado: ". $estadoPedido . " para empleados de tipo: ". $perfilEmpleado .
                   " en la comanda de la mesa numero " . $comanda->idMesa));
               
             } else 
@@ -66,17 +70,17 @@ class ComandaController extends Comanda
                 }
 
                  
-
+                 
                   if($estadoPedido == "pendiente")
                   {
                   
                     Comanda::calcularTiempoFinalizacionPedidos();
-                    Comanda::cambiarEstadoPedidosAEnPreparacion($codigoPedido);
+                    Comanda::cambiarEstadoPedidosAEnPreparacion($codigoPedido,$tipoProducto);
 
                   }
                   if($estadoPedido == "En preparacion")
                   {
-                    Comanda::cambiarEstadoPedidosAListoParaServir($codigoPedido);
+                    Comanda::cambiarEstadoPedidosAListoParaServir($codigoPedido,$tipoProducto);
                   }
                   
                   
@@ -91,7 +95,6 @@ class ComandaController extends Comanda
           
        
     }
-
 
     public function MostrarTiempoDemora($request, $response, $args)
     {
@@ -136,6 +139,7 @@ class ComandaController extends Comanda
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+   
 
     public function ListarPedidosListosParaServir($request, $response, $args)
     {

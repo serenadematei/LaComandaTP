@@ -59,7 +59,11 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   //PRODUCTOS
   $app->group('/productos', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ProductoController::class . ':TraerTodos');
-    $group->post('[/]', \ProductoController::class . ':CargarUno')->add(new esUsuarioRegistradoMiddleware());
+    $group->post('/cargarUno', \ProductoController::class . ':CargarUno')->add(new esUsuarioRegistradoMiddleware());
+    $group->delete('/{productoId}', \ProductoController::class . ':BorrarUno')->add(new esSocioRegistradoMiddleware());
+    $group->post('/ModificarUno/{productoId}', \ProductoController::class . ':ModificarUno')->add(new esSocioRegistradoMiddleware());
+    $group->get('/GenerarCSV', \ProductoController::class . ':obtenerTodosCSV');
+    $group->post('/cargarDatosDesdeCSV', \ProductoController::class . ':CargarDatosDesdeCSV');
   });
 
 
@@ -81,10 +85,10 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $app->group('/comandas', function (RouteCollectorProxy $group)
   {
     $group->post('/foto', \ComandaController::class . ':ObtenerFotoMesa')->add(new esMozoMiddleware()); //PUNTO 2
-    $group->get('/listarPendientes', \ComandaController::class . ':ListarPedidosPorEstadoYTipoEmpleado'); //PUNTO 3
+    $group->get('/listarPendientes', \ComandaController::class . ':ListarPedidosPorEstado');  //PUNTO 3 
     $group->get('/demora/{idMesa}/{codigoPedido}', \ComandaController::class . ':MostrarTiempoDemora'); //PUNTO 4
     $group->get('[/]', \ComandaController::class . ':TraerTodosLosPedidosConTiempoDeDemora')->add(new esSocioRegistradoMiddleware());//PUNTO 5
-    $group->get('/listarEnPreparacion', \ComandaController::class . ':ListarPedidosPorEstadoYTipoEmpleado'); //PUNTO 6
+    $group->get('/listarEnPreparacion', \ComandaController::class . ':ListarPedidosPorEstado'); //PUNTO 6
     $group->get('/servir/{idMesa}', \ComandaController::class . ':Servir')->add(new esMozoMiddleware()); //PUNTO 7
     $group->get('/listarMesas', \MesaController::class . ':TraerTodos')->add(new esSocioRegistradoMiddleware()); //PUNTO 8
     $group->post('/cobrarCuenta', \ComandaController::class . ':CobrarCuenta')->add(new esMozoMiddleware()); //PUNTO 9

@@ -50,7 +50,8 @@ class Usuario
     {
         $socios = Usuario::traerSocios();
         $count = count($socios);
-        $random = rand(0, $count - 1);
+        $limite = $count - 1;
+        $random = rand(0, $limite);
         $socioDesignado = $socios[$random];
 
         return $socioDesignado->id;
@@ -61,7 +62,8 @@ class Usuario
         $mozos = Usuario::traerMozos();
 
         $count = count($mozos);
-        $random = rand(0, $count - 1);
+        $limite = $count - 1;
+        $random = rand(0, $limite);
         $mozoDesignado = $mozos[$random];
 
         return $mozoDesignado->id;

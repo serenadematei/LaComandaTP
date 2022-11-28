@@ -1,5 +1,5 @@
 <?php
-
+ 
 
 class Comanda
 {
@@ -87,29 +87,38 @@ class Comanda
         return $fila[0];
     }
 
-    public static function cambiarEstadoPedidosAEnPreparacion($codigoPedido)
+
+  
+    public static function cambiarEstadoPedidosAListoParaServir($codigoPedido,$tipoProducto)
     {
         $tiempoInicio = date("H:i:s");
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET estado = "En preparacion" , tiempoInicio = :tiempoInicio
-        WHERE codigoPedido = :codigoPedido AND estado = "Pendiente" ');
+        $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET estado = "Listo para servir"
+        WHERE codigoPedido = :codigoPedido AND tipoProducto = :tipoProducto AND estado = "En preparacion" ');
         $consulta->bindValue(':codigoPedido', $codigoPedido, PDO::PARAM_STR);
+        $consulta->bindValue(':tipoProducto', $tipoProducto, PDO::PARAM_STR);
+      
+        $consulta->execute();
+
+    }
+    
+
+    
+    public static function cambiarEstadoPedidosAEnPreparacion($codigoPedido, $tipoProducto)
+    {
+        
+        $tiempoInicio = date("H:i:s");
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET estado = "En preparacion", tiempoInicio = :tiempoInicio
+        WHERE codigoPedido = :codigoPedido AND tipoProducto = :tipoProducto AND estado = "Pendiente" ');
+        $consulta->bindValue(':codigoPedido', $codigoPedido, PDO::PARAM_STR);
+        $consulta->bindValue(':tipoProducto', $tipoProducto, PDO::PARAM_STR);
         $consulta->bindValue(':tiempoInicio', $tiempoInicio, PDO::PARAM_STR);
         $consulta->execute();
 
     }
-
-    public static function cambiarEstadoPedidosAListoParaServir($codigoPedido)
-    {
-        $tiempoInicio = date("H:i:s");
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET estado = "Listo para servir", tiempoInicio = :tiempoInicio
-        WHERE codigoPedido = :codigoPedido AND estado = "En preparacion" ');
-        $consulta->bindValue(':codigoPedido', $codigoPedido, PDO::PARAM_STR);
-        $consulta->bindValue(':tiempoInicio', $tiempoInicio, PDO::PARAM_STR);
-        $consulta->execute();
-
-    }
+    
+    
 
     public static function calcularTiempoFinalizacionPedidos()
     {

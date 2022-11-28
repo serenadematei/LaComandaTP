@@ -30,7 +30,7 @@ class Mesa
     public static function VerificarIdYDisponibilidad($id)
     {
       $objAccesoDato = AccesoDatos::obtenerInstancia();
-      $consulta = $objAccesoDato->prepararConsulta("SELECT * FROM mesas WHERE id = :id"); // AND estado = 'Disponible' ");
+      $consulta = $objAccesoDato->prepararConsulta("SELECT * FROM mesas WHERE id = :id"); 
       $consulta->bindValue(':id', $id, PDO::PARAM_INT);
       $consulta->execute();
       $datosAux = $consulta->fetch(PDO::FETCH_BOTH);
