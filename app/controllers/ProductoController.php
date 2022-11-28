@@ -100,7 +100,7 @@ class ProductoController extends Producto implements IApiUsable
       return $response->withHeader('Content-Type', 'application/json');
   } 
 
-  public static function obtenerTodosCSV($request, $response, $args)
+  public static function generarCSV($request, $response, $args)
   {
     $productos = Producto::obtenerTodos();
     $payload = json_encode($productos);

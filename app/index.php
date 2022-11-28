@@ -62,7 +62,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/cargarUno', \ProductoController::class . ':CargarUno')->add(new esUsuarioRegistradoMiddleware());
     $group->delete('/{productoId}', \ProductoController::class . ':BorrarUno')->add(new esSocioRegistradoMiddleware());
     $group->post('/ModificarUno/{productoId}', \ProductoController::class . ':ModificarUno')->add(new esSocioRegistradoMiddleware());
-    $group->get('/GenerarCSV', \ProductoController::class . ':obtenerTodosCSV');
+    $group->get('/GenerarCSV', \ProductoController::class . ':generarCSV');
     $group->post('/cargarDatosDesdeCSV', \ProductoController::class . ':CargarDatosDesdeCSV');
   });
 
@@ -71,6 +71,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $app->group('/mesas', function (RouteCollectorProxy $group) {
     $group->get('[/]', \MesaController::class . ':TraerTodos');
     $group->post('[/]', \MesaController::class . ':CargarUno')->add(new esUsuarioRegistradoMiddleware()); 
+    $group->get('/ReestablecerDisponibilidad', \MesaController::class . ':ReestablecerDisponibilidad')->add(new esSocioRegistradoMiddleware());
   });
 
 

@@ -88,10 +88,10 @@ class Comanda
     }
 
 
-  
+  //ojo aca
     public static function cambiarEstadoPedidosAListoParaServir($codigoPedido,$tipoProducto)
     {
-        $tiempoInicio = date("H:i:s");
+       
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta('UPDATE pedidos SET estado = "Listo para servir"
         WHERE codigoPedido = :codigoPedido AND tipoProducto = :tipoProducto AND estado = "En preparacion" ');
@@ -128,14 +128,14 @@ class Comanda
         $productos = Producto::obtenerTodos();
 
         $TAMpedidos = count($pedidos);
-        $TAMproductos = count($productos)-1;
+        $TAMproductos = count($productos);
 
     
           
         for($i=0 ; $i< $TAMpedidos ; $i++)
         {
             
-            for($j=1; $j<$TAMproductos ; $j++)
+            for($j=0; $j<$TAMproductos ; $j++)
             {
                 
                 if($pedidos[$i]->idProducto == $productos[$j]->id)

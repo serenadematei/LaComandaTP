@@ -70,30 +70,21 @@ class ComandaController extends Comanda
                 }
 
                  
-                 
                   if($estadoPedido == "pendiente")
                   {
-                  
                     Comanda::calcularTiempoFinalizacionPedidos();
                     Comanda::cambiarEstadoPedidosAEnPreparacion($codigoPedido,$tipoProducto);
-
                   }
                   if($estadoPedido == "En preparacion")
                   {
                     Comanda::cambiarEstadoPedidosAListoParaServir($codigoPedido,$tipoProducto);
                   }
-                  
-                  
-             
             }
 
 
             $response->getBody()->write($payload);
             return $response
-                ->withHeader('Content-Type', 'application/json');
-
-          
-       
+                ->withHeader('Content-Type', 'application/json');   
     }
 
     public function MostrarTiempoDemora($request, $response, $args)
@@ -169,7 +160,7 @@ class ComandaController extends Comanda
 
        foreach($pedidos as $p)
        {
-          $p->estado = "Servido";
+         Pedido::cambiarEstadoPedido($p->id, "Servido");
        }
 
 
@@ -199,7 +190,8 @@ class ComandaController extends Comanda
          {
             $producto = Producto::traerProductoPorId($pedidos[$i]->idProducto);
             array_push($productosACobrar,$producto);
-            $pedidos[$i]->estado = "Pago";
+            Pedido::cambiarEstadoPedido($pedidos[$i]->id, "Pago");
+           
          }
       }
 

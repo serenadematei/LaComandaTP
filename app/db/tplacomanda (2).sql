@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2022 a las 03:23:20
+-- Tiempo de generación: 28-11-2022 a las 14:03:39
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -41,7 +41,7 @@ CREATE TABLE `comandas` (
 --
 
 INSERT INTO `comandas` (`id`, `idMesa`, `idSocio`, `idMozo`, `codigoPedido`, `foto`) VALUES
-(1, 4, 1, 6, 'A0100', '/MesaNumero4.jpg');
+(10, 1, 1, 6, 'A0100', '/MesaNumero1.jpg');
 
 -- --------------------------------------------------------
 
@@ -59,16 +59,17 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`id`, `estado`) VALUES
-(1, 'Disponible'),
+(1, 'Cerrada'),
 (2, 'Disponible'),
 (3, 'Disponible'),
-(4, 'Cerrada'),
+(4, 'Disponible'),
 (5, 'Disponible'),
 (6, 'Disponible'),
 (7, 'Disponible'),
 (8, 'Disponible'),
 (9, 'Disponible'),
-(10, 'Disponible');
+(10, 'Disponible'),
+(11, 'Disponible');
 
 -- --------------------------------------------------------
 
@@ -86,19 +87,17 @@ CREATE TABLE `pedidos` (
   `idProducto` int(11) NOT NULL,
   `idMesa` int(11) NOT NULL,
   `codigoPedido` varchar(100) NOT NULL,
-  `tiempoInicio` int(11) DEFAULT NULL,
-  `tiempoFinalizacion` int(11) DEFAULT NULL
+  `tipoProducto` varchar(100) DEFAULT NULL,
+  `tiempoInicio` varchar(100) DEFAULT NULL,
+  `tiempoFinalizacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `estado`, `nombreCliente`, `idMozo`, `idSocio`, `idEmpleado`, `idProducto`, `idMesa`, `codigoPedido`, `tiempoInicio`, `tiempoFinalizacion`) VALUES
-(1, 'Listo para servir', 'Thiago', 6, 1, 8, 2, 4, 'A0100', 3, 3),
-(2, 'Listo para servir', 'Thiago', 6, 1, 8, 10, 4, 'A0100', 3, 3),
-(3, 'Listo para servir', 'Thiago', 6, 1, 12, 3, 4, 'A0100', 3, 3),
-(4, 'Listo para servir', 'Thiago', 6, 1, 11, 3, 4, 'A0100', 3, 3);
+INSERT INTO `pedidos` (`id`, `estado`, `nombreCliente`, `idMozo`, `idSocio`, `idEmpleado`, `idProducto`, `idMesa`, `codigoPedido`, `tipoProducto`, `tiempoInicio`, `tiempoFinalizacion`) VALUES
+(22, 'Pago', 'Juan Cruz', 6, 1, 12, 1, 1, 'A0100', 'Comida', '13:54:06', '14:27:06');
 
 -- --------------------------------------------------------
 
@@ -118,10 +117,7 @@ CREATE TABLE `productopedido` (
 --
 
 INSERT INTO `productopedido` (`id`, `codigoPedido`, `idProducto`, `idEmpleado`) VALUES
-(1, 'A0100', 2, 8),
-(2, 'A0100', 10, 8),
-(3, 'A0100', 3, 12),
-(4, 'A0100', 3, 11);
+(22, 'A0100', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -153,7 +149,21 @@ INSERT INTO `productos` (`id`, `descripcion`, `minutosPreparacion`, `precio`, `t
 (9, 'Hamburguesa de garbanzo', 42, 850, 'Comida'),
 (10, 'Sprite', 10, 150, 'Bebida'),
 (11, 'Coca Cola', 10, 150, 'Bebida'),
-(12, 'Gin tonic', 10, 150, 'Bebida');
+(12, 'Gin tonic', 10, 150, 'Bebida'),
+(14, 'Pizza Napolitana', 35, 1100, 'Comida'),
+(15, 'Risotto', 42, 850, 'Comida'),
+(16, 'Picada', 15, 750, 'Comida'),
+(17, 'Blue coracao', 10, 300, 'Bebida'),
+(18, 'Latte Vainilla', 10, 155, 'Bebida'),
+(19, 'Patagonia', 12, 470, 'Cerveza'),
+(21, 'Empanada capresse', 32, 150, 'Comida'),
+(33, 'Empanada de carne', 36, 150, 'Comida'),
+(34, 'Empanada de pollo', 37, 150, 'Comida'),
+(36, 'Ensalada de frutas', 20, 300, 'Comida'),
+(37, 'Vino rosado', 4, 690, 'Bebida'),
+(38, 'Vino blanco', 4, 630, 'Bebida'),
+(39, 'Champagne', 5, 900, 'Bebida'),
+(40, 'Champagne', 5, 900, 'Bebida');
 
 -- --------------------------------------------------------
 
@@ -237,31 +247,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comandas`
 --
 ALTER TABLE `comandas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `productopedido`
 --
 ALTER TABLE `productopedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

@@ -34,6 +34,17 @@ class MesaController extends Mesa
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+    
+    public function ReestablecerDisponibilidad($request, $response, $args)
+    {
+        Mesa::reestablecerDisponibilidadMesas();
+
+        $payload = json_encode(array("Mensaje" => "Se cambio el estado de todas las mesas a DISPONIBLE"));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
 
 
    

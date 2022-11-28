@@ -52,6 +52,15 @@ class Mesa
 
     }
 
+    public static function reestablecerDisponibilidadMesas()
+    {
+        
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE mesas SET estado = 'Disponible' ");
+        $consulta->execute();
+
+    }
+
 
 }
 ?>
